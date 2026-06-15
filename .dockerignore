@@ -1,0 +1,10 @@
+.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+mealplan.db
+run.ps1
+Dockerfile
+docker-compose.yml
+README.md

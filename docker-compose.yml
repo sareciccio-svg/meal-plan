@@ -1,0 +1,11 @@
+services:
+  meal-plan:
+    build: .
+    container_name: meal-plan
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:///./data/mealplan.db
+    restart: unless-stopped
