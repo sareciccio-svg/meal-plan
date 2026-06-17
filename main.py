@@ -9,7 +9,14 @@ from sqlalchemy.orm import sessionmaker, relationship, joinedload
 
 # --- DATENBANK SETUP ---
 # SQLite ist eine einfache Datei-Datenbank, perfekt für den Start
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./mealplan.db")
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/mealplan.db")
+
+# Sicherstellen, dass das Datenverzeichnis existiert (wichtig für Docker Volumes)
+db_file_path = SQLALCHEMY_DATABASE_URL.replace("sqlite:///./", "")
+db_dir = os.path.dirname(db_file_path)
+if db_dir and not os.path.exists(db_dir):
+    os.makedirs(db_dir)
+
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
